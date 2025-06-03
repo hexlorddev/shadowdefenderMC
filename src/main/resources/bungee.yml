@@ -1,0 +1,5 @@
+name: ShadowDefenderMC
+version: '1.0.0'
+description: High-performance Minecraft Anti-DDoS Plugin for BungeeCord
+author: HexLordDev
+main: com.shadowdefender.mc.bungee.ShadowDefenderBungee

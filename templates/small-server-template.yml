@@ -1,0 +1,93 @@
+# Small Server Template (Under 50 Players)
+# Optimized for small communities with relaxed protection
+# Author: HexLordDev Team
+
+# Plugin Configuration
+plugin:
+  enabled: true
+  debug: false
+  update_check: true
+
+# Bot Protection - Relaxed for small servers
+bot_protection:
+  enabled: true
+  max_joins_per_ip_per_second: 2      # Lower for small servers
+  max_joins_per_ip_per_10_seconds: 4  # Allow family connections
+  auto_ban_duration: 300              # 5 minutes
+  
+  # Basic pattern detection
+  suspicious_username_patterns:
+    - "^[a-z]{1,3}[0-9]{3,8}$"
+    - "^(test|bot|hack)[0-9]*$"
+    
+  whitelist_usernames:
+    - "ServerOwner"
+    - "Admin"
+
+# VPN Detection - Warning mode for small servers
+vpn_detection:
+  enabled: true
+  api_provider: "ip-api"
+  timeout: 5000
+  action: "warn"                      # Warn instead of kick
+  message: "&eVPN detected. Please contact staff if you have connection issues."
+  
+  whitelist_ips:
+    - "127.0.0.1"
+    - "192.168.0.0/16"
+
+# Challenge Mode - High threshold for small servers
+challenge_mode:
+  enabled: true
+  trigger_threshold: 15               # Higher threshold
+  duration: 300                       # 5 minutes
+  verification_timeout: 120           # 2 minutes for players
+  limbo_world: "verification"
+  
+  welcome_message: |
+    &e&lServer Protection Active
+    &7Please verify to continue playing:
+    &a/verify {CODE}
+    &7Your code: &b{CODE}
+    
+  kick_message: "&cVerification timeout. Please rejoin."
+
+# Rate Limiting - Generous for small servers
+rate_limiting:
+  enabled: true
+  max_packets_per_second: 200         # High limit
+  max_connections_per_ip: 5           # Allow family sharing
+  connection_throttle: 500            # Fast reconnection
+
+# Logging - Standard for small servers
+logging:
+  console: true
+  file: true
+  file_path: "plugins/ShadowDefenderMC/logs/security.log"
+  max_file_size: 5242880              # 5MB
+  log_level: "INFO"
+
+# Messages - Friendly for small servers
+messages:
+  prefix: "&8[&6🛡️ Protection&8] "
+  bot_kick: "&cConnection blocked due to suspicious activity"
+  rate_limit_kick: "&cToo many connections. Please wait a moment."
+  vpn_kick: "&eVPN detected. Contact staff if this is an error."
+  verification_success: "&a✅ Verified! Welcome to the server."
+  verification_failed: "&c❌ Invalid code. Please try again."
+  challenge_activated: "&e⚠️ Protection mode activated"
+
+# Advanced - Optimized for small servers
+advanced:
+  use_async_processing: true
+  cache_duration: 300                 # 5 minutes
+  cleanup_interval: 120               # 2 minutes
+  max_cached_ips: 1000               # Small cache
+  thread_pool_size: 2                # Minimal threads
+
+# API Configuration
+vpn_detection:
+  apis:
+    ip-api:
+      url: "http://ip-api.com/json/{IP}?fields=status,message,proxy,hosting,query"
+      enabled: true

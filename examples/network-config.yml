@@ -1,0 +1,106 @@
+# Large Network Configuration
+# Optimized for networks with 1000+ concurrent players
+# Focus: High performance and scalability
+
+# General Settings
+plugin:
+  enabled: true
+  debug: false
+  update_check: true
+
+# Bot Protection - Scaled for high traffic
+bot_protection:
+  enabled: true
+  max_joins_per_ip_per_second: 10     # High for network servers
+  max_joins_per_ip_per_10_seconds: 20 # Allow for legitimate traffic spikes
+  auto_ban_duration: 300              # 5 minutes
+  
+  suspicious_username_patterns:
+    - "^[a-z]{1,3}[0-9]{3,8}$"
+    - "^(test|bot|hack|ddos|spam)[0-9]*$"
+    
+  whitelist_usernames:
+    - "NetworkOwner"
+    - "HeadAdmin"
+    - "SystemAccount"
+
+# VPN Detection - Balanced approach for networks
+vpn_detection:
+  enabled: true
+  api_provider: "ip-api"
+  timeout: 10000                      # Higher timeout for reliability
+  action: "kick"
+  message: "&cVPN/Proxy connections are not permitted on this network."
+  
+  whitelist_ips:
+    - "127.0.0.1"
+    - "192.168.0.0/16"
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+
+# Challenge Mode - Network appropriate
+challenge_mode:
+  enabled: true
+  trigger_threshold: 50               # High threshold for networks
+  duration: 900                       # 15 minutes
+  verification_timeout: 180           # 3 minutes for players
+  limbo_world: "network_verify"
+  
+  welcome_message: |
+    &e&l🌐 NETWORK PROTECTION ACTIVE
+    &7Please complete verification to access the network:
+    &a/verify {CODE}
+    &7Your verification code: &b{CODE}
+    &7Timeout: 3 minutes
+    
+  kick_message: "&cVerification timeout. Please rejoin and verify."
+
+# Rate Limiting - High capacity
+rate_limiting:
+  enabled: true
+  max_packets_per_second: 500         # Very high for networks
+  max_connections_per_ip: 25          # Allow many connections (proxies, etc)
+  connection_throttle: 100            # Fast reconnections
+
+# Logging - Optimized for high volume
+logging:
+  console: true
+  file: true
+  file_path: "plugins/ShadowDefenderMC/logs/security.log"
+  max_file_size: 52428800             # 50MB for networks
+  log_level: "WARN"                   # Only warnings and errors
+
+# Messages - Network branding
+messages:
+  prefix: "&8[&6🌐 NetGuard&8] "
+  bot_kick: "&cConnection blocked: Network protection active"
+  rate_limit_kick: "&cRate limit exceeded. Please wait before reconnecting."
+  vpn_kick: "&cVPN/Proxy not allowed on this network"
+  verification_success: "&a✅ Network access granted. Welcome!"
+  verification_failed: "&c❌ Invalid code. Try again."
+  challenge_activated: "&e🛡️ Network protection activated"
+
+# Advanced Settings - High performance
+advanced:
+  use_async_processing: true
+  cache_duration: 1200                # 20 minutes for networks
+  cleanup_interval: 15                # Frequent cleanup for performance
+  max_cached_ips: 100000             # Very large cache
+  thread_pool_size: 16               # Many threads for high concurrency
+
+# API Configurations with multiple keys for rate limiting
+apis:
+  ip-api:
+    url: "http://ip-api.com/json/{IP}?fields=status,message,proxy,hosting,query"
+    enabled: true
+  
+  # Backup API configurations for redundancy
+  iphub:
+    url: "http://v2.api.iphub.info/ip/{IP}"
+    api_key: "your_backup_api_key"    # Use backup API for reliability
+    enabled: false
+    
+  proxycheck:
+    url: "http://proxycheck.io/v2/{IP}?vpn=1&asn=1"
+    api_key: "your_proxycheck_key"
+    enabled: false

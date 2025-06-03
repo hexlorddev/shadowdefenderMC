@@ -1,0 +1,90 @@
+# ShadowDefenderMC - English (US) Language File
+# Created by HexLordDev
+
+# === PLUGIN MESSAGES ===
+plugin:
+  prefix: "&8[&cShadowDefender&8]&r "
+  enabled: "&aPlugin enabled successfully!"
+  disabled: "&cPlugin disabled."
+  reloaded: "&aConfiguration reloaded successfully!"
+  no_permission: "&cYou don't have permission to use this command."
+
+# === PROTECTION MESSAGES ===
+protection:
+  rate_limit_exceeded: "&cConnection rate limit exceeded. Please wait before reconnecting."
+  ip_banned: "&cYour IP has been temporarily banned due to suspicious activity."
+  bot_detected: "&cBot-like behavior detected. Connection rejected."
+  vpn_detected: "&cVPN/Proxy detected. Please connect without a VPN."
+  geo_blocked: "&cConnections from your country are not allowed."
+  challenge_required: "&eYou must complete a verification challenge to continue."
+
+# === CHALLENGE MODE ===
+challenge:
+  instructions: "&eWelcome! To continue, please type: &a/verify {code}"
+  code_generated: "&aYour verification code is: &e{code}"
+  success: "&aVerification successful! Welcome to the server."
+  failed: "&cIncorrect verification code. Please try again."
+  expired: "&cVerification code expired. Please reconnect."
+  max_attempts: "&cToo many failed attempts. Please reconnect."
+
+# === ADMIN COMMANDS ===
+commands:
+  status:
+    header: "&8=== &cShadowDefender Status &8==="
+    protection_active: "&aProtection: &eActive"
+    protection_inactive: "&cProtection: &eInactive"
+    challenge_mode: "&eChallenge Mode: {status}"
+    blocked_ips: "&eBlocked IPs: &a{count}"
+    total_blocks: "&eTotal Blocks: &a{count}"
+    uptime: "&eUptime: &a{time}"
+    footer: "&8=========================="
+  
+  reload:
+    success: "&aConfiguration reloaded successfully!"
+    error: "&cError reloading configuration: {error}"
+  
+  whitelist:
+    added: "&aAdded &e{target} &ato whitelist."
+    removed: "&cRemoved &e{target} &cfrom whitelist."
+    already_exists: "&e{target} &eis already whitelisted."
+    not_found: "&c{target} &cis not in the whitelist."
+
+# === NOTIFICATIONS ===
+notifications:
+  attack_detected: "&c⚠ ATTACK DETECTED: {count} blocked attempts in the last minute"
+  mass_join: "&c⚠ MASS JOIN EVENT: {count} connections from {ip}"
+  new_threat: "&c⚠ NEW THREAT: {ip} attempting to bypass protection"
+  protection_enabled: "&a✓ Automatic protection enabled due to high traffic"
+  protection_disabled: "&e✓ Automatic protection disabled - traffic normalized"
+
+# === ERROR MESSAGES ===
+errors:
+  config_load_failed: "&cFailed to load configuration file."
+  api_unavailable: "&eVPN detection API unavailable - allowing connection."
+  database_error: "&cDatabase connection error - using fallback mode."
+  permission_denied: "&cInsufficient permissions to perform this action."
+  invalid_syntax: "&cInvalid command syntax. Use &e/shadowdef help &cfor usage."
+
+# === INFO MESSAGES ===
+info:
+  plugin_info: "&eShadowDefenderMC v{version} by HexLordDev"
+  website: "&eWebsite: &ahttps://github.com/hexlorddev"
+  support: "&eSupport: &ahttps://github.com/hexlorddev/ShadowDefenderMC/issues"
+  documentation: "&eDocumentation: &ahttps://github.com/hexlorddev/ShadowDefenderMC/wiki"
+
+# === TIME FORMATS ===
+time:
+  seconds: "{time}s"
+  minutes: "{time}m"
+  hours: "{time}h"
+  days: "{time}d"
+  permanent: "permanent"
+
+# === STATISTICS ===
+stats:
+  connections_blocked: "Connections Blocked"
+  bots_detected: "Bots Detected"
+  vpns_blocked: "VPNs Blocked"
+  challenges_completed: "Challenges Completed"
+  uptime: "Plugin Uptime"
+  protection_level: "Protection Level"

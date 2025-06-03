@@ -1,0 +1,94 @@
+# ShadowDefenderMC Configuration
+# High-performance Anti-DDoS protection for Minecraft servers
+
+# General Settings
+plugin:
+  enabled: true
+  debug: false
+  update_check: true
+
+# Bot Join Protection
+bot_protection:
+  enabled: true
+  max_joins_per_ip_per_second: 3
+  max_joins_per_ip_per_10_seconds: 5
+  auto_ban_duration: 300 # in seconds (5 minutes)
+  suspicious_username_patterns:
+    - "^[a-z]{1,3}[0-9]{3,8}$"  # abc123, x456789
+    - "^[qwertyuiopasdfghjklzxcvbnm]{4,12}$"  # keyboard mash detection
+    - "^(test|bot|hack|ddos|spam)[0-9]*$"  # common bot patterns
+  whitelist_usernames:
+    - "AdminUser"
+    - "ServerOwner"
+  
+# VPN/Proxy Detection
+vpn_detection:
+  enabled: true
+  api_provider: "ip-api"  # Options: ip-api, iphub, proxycheck
+  timeout: 5000  # API timeout in milliseconds
+  action: "kick"  # Options: kick, warn, log
+  message: "&cVPN/Proxy connections are not allowed on this server!"
+  whitelist_ips:
+    - "127.0.0.1"
+    - "192.168.1.0/24"
+  
+  # API Configurations
+  apis:
+    ip-api:
+      url: "http://ip-api.com/json/{IP}?fields=status,message,proxy,hosting,query"
+      enabled: true
+    iphub:
+      url: "http://v2.api.iphub.info/ip/{IP}"
+      api_key: ""  # Optional API key for better rate limits
+      enabled: false
+    proxycheck:
+      url: "http://proxycheck.io/v2/{IP}?vpn=1&asn=1"
+      api_key: ""  # Optional API key
+      enabled: false
+
+# Smart Challenge Mode
+challenge_mode:
+  enabled: true
+  trigger_threshold: 10  # Number of suspicious joins to trigger challenge mode
+  duration: 300  # How long challenge mode stays active (seconds)
+  verification_timeout: 60  # How long players have to verify (seconds)
+  limbo_world: "limbo"  # World name for unverified players
+  welcome_message: |
+    &e&lSERVER PROTECTION ACTIVE
+    &7Please verify yourself by typing:
+    &a/verify {CODE}
+    &7Your verification code: &b{CODE}
+  kick_message: "&cVerification timeout! Please rejoin and verify quickly."
+
+# Rate Limiting
+rate_limiting:
+  enabled: true
+  max_packets_per_second: 100
+  max_connections_per_ip: 5
+  connection_throttle: 1000  # milliseconds between connections from same IP
+
+# Logging
+logging:
+  console: true
+  file: true
+  file_path: "plugins/ShadowDefenderMC/logs/security.log"
+  max_file_size: 10485760  # 10MB
+  log_level: "INFO"  # DEBUG, INFO, WARN, ERROR
+  
+# Messages
+messages:
+  prefix: "&8[&6ShadowDefender&8] "
+  bot_kick: "&cConnection blocked: Suspicious activity detected"
+  rate_limit_kick: "&cConnection blocked: Too many requests"
+  vpn_kick: "&cVPN/Proxy connections are not allowed"
+  verification_success: "&aVerification successful! Welcome to the server."
+  verification_failed: "&cInvalid verification code!"
+  challenge_activated: "&eServer protection activated due to suspicious activity"
+
+# Advanced Settings
+advanced:
+  use_async_processing: true
+  cache_duration: 300  # IP cache duration in seconds
+  cleanup_interval: 60  # Cleanup task interval in seconds
+  max_cached_ips: 10000
+  thread_pool_size: 4

@@ -1,0 +1,75 @@
+# ShadowDefenderMC - Strict Protection Configuration
+# Recommended for servers under frequent attack
+# WARNING: May cause false positives for legitimate players
+
+# === RATE LIMITING ===
+rate_limiting:
+  max_joins_per_ip_per_second: 1
+  max_joins_per_ip_per_minute: 3
+  max_joins_per_ip_per_hour: 10
+  auto_ban_duration: 3600  # 1 hour
+  whitelist_bypass: true
+
+# === BOT DETECTION ===
+bot_detection:
+  enabled: true
+  suspicious_usernames:
+    - "^[a-z]{3,8}[0-9]{3,8}$"  # abc123
+    - "^[0-9]+$"                # numbers only
+    - "^[a-zA-Z]{1,3}[0-9]{1,3}$" # a1, ab12
+    - "^guest[0-9]+$"           # guest123
+    - "^user[0-9]+$"            # user123
+    - "^player[0-9]+$"          # player123
+  check_keyboard_mash: true
+  keyboard_mash_threshold: 0.7
+
+# === VPN/PROXY DETECTION ===
+vpn_detection:
+  enabled: true
+  api_providers:
+    - "ip-api.com"
+    - "iphub.info"
+    - "vpnapi.io"
+  action: "kick"  # kick, ban, or warn
+  ban_duration: 7200  # 2 hours
+  whitelist_bypass: true
+  check_timeout: 3000  # 3 seconds
+
+# === CHALLENGE MODE ===
+challenge_mode:
+  enabled: true
+  trigger_threshold: 10  # joins per minute to activate
+  challenge_timeout: 120  # 2 minutes to complete
+  limbo_world: "limbo"
+  max_attempts: 3
+
+# === GEO BLOCKING ===
+geo_blocking:
+  enabled: true
+  blocked_countries: ["CN", "RU", "KP", "IR"]  # Example high-risk countries
+  whitelist_bypass: true
+
+# === LOGGING ===
+logging:
+  console_level: "INFO"
+  file_level: "DEBUG"
+  log_all_connections: true
+  log_blocked_attempts: true
+  max_log_size: "10MB"
+
+# === PERFORMANCE ===
+performance:
+  async_processing: true
+  cache_size: 5000
+  cleanup_interval: 300  # 5 minutes
+
+# === NOTIFICATIONS ===
+notifications:
+  discord_webhook: ""  # Add your Discord webhook URL
+  slack_webhook: ""    # Add your Slack webhook URL
+  email_alerts: false
+  threshold_for_alert: 50  # attacks per minute
+
+---
+# ShadowDefenderMC by HexLordDev
+# For support: https://github.com/hexlorddev/ShadowDefenderMC

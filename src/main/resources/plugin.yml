@@ -1,0 +1,31 @@
+name: ShadowDefenderMC
+version: '1.0.0'
+description: High-performance Minecraft Anti-DDoS Plugin
+authors: [HexLordDev]
+website: https://github.com/HexLordDev/ShadowDefenderMC
+main: com.shadowdefender.mc.ShadowDefenderMC
+
+api-version: 1.13
+
+commands:
+  shadowdef:
+    description: Main command for ShadowDefender
+    usage: /shadowdef <status|reload>
+    permission: shadowdefender.admin
+    aliases: [sdef, shadowdefender]
+  verify:
+    description: Verify player during challenge mode
+    usage: /verify <code>
+
+permissions:
+  shadowdefender.admin:
+    description: Access to admin commands
+    default: op
+  shadowdefender.bypass:
+    description: Bypass all protection checks
+    default: false
+  shadowdefender.verify:
+    description: Can use verify command
+    default: true
+
+soft-depend: [ProtocolLib, ViaVersion]

@@ -1,0 +1,102 @@
+# Development Server Configuration
+# Minimal protection for testing and development
+# Focus: Easy testing with comprehensive logging
+
+# General Settings
+plugin:
+  enabled: true
+  debug: true                         # Full debug mode
+  update_check: false                 # Disable for dev servers
+
+# Bot Protection - Minimal for testing
+bot_protection:
+  enabled: false                      # Disabled for easy testing
+  max_joins_per_ip_per_second: 50     # Very high limits
+  max_joins_per_ip_per_10_seconds: 100
+  auto_ban_duration: 30               # Short bans
+  
+  suspicious_username_patterns: []    # No pattern matching
+  whitelist_usernames:
+    - "Developer"
+    - "Tester"
+    - "TestUser"
+
+# VPN Detection - Log only mode
+vpn_detection:
+  enabled: true
+  api_provider: "ip-api"
+  timeout: 15000                      # Longer timeout for dev
+  action: "log"                       # Log only, don't block
+  message: "&eVPN detected in development mode"
+  
+  whitelist_ips:
+    - "127.0.0.1"
+    - "192.168.0.0/16"
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+
+# Challenge Mode - Disabled for easy testing
+challenge_mode:
+  enabled: false                      # Disabled for development
+  trigger_threshold: 1000             # Very high threshold
+  duration: 60                        # Short duration
+  verification_timeout: 300           # Long timeout
+  limbo_world: "dev_verify"
+  
+  welcome_message: |
+    &a&lDEVELOPMENT MODE
+    &7Testing verification system:
+    &a/verify {CODE}
+    &7Code: &b{CODE}
+    
+  kick_message: "&aDev mode: Verification test completed"
+
+# Rate Limiting - Minimal for testing
+rate_limiting:
+  enabled: false                      # Disabled for development
+  max_packets_per_second: 1000        # Very high
+  max_connections_per_ip: 100         # No real limits
+  connection_throttle: 0              # No throttling
+
+# Logging - Maximum verbosity for debugging
+logging:
+  console: true
+  file: true
+  file_path: "plugins/ShadowDefenderMC/logs/dev-security.log"
+  max_file_size: 5242880              # 5MB (smaller for dev)
+  log_level: "DEBUG"                  # Full debug logging
+
+# Messages - Development themed
+messages:
+  prefix: "&a[&2🔧 DEV MODE&a] "
+  bot_kick: "&aBot protection test: Connection blocked"
+  rate_limit_kick: "&aRate limit test: Connection throttled"
+  vpn_kick: "&aVPN test: Detection active"
+  verification_success: "&a✅ Dev test: Verification successful"
+  verification_failed: "&a❌ Dev test: Verification failed"
+  challenge_activated: "&a🧪 Dev test: Challenge mode activated"
+
+# Advanced Settings - Development optimized
+advanced:
+  use_async_processing: true
+  cache_duration: 60                  # Short cache for testing
+  cleanup_interval: 10                # Frequent cleanup
+  max_cached_ips: 1000               # Small cache
+  thread_pool_size: 2                # Minimal threads
+
+# API test configurations
+apis:
+  ip-api:
+    url: "http://ip-api.com/json/{IP}?fields=status,message,proxy,hosting,query"
+    enabled: true
+  
+  # Test with multiple APIs in dev
+  iphub:
+    url: "http://v2.api.iphub.info/ip/{IP}"
+    api_key: "test_key"
+    enabled: true                     # Enable for testing
+    
+  proxycheck:
+    url: "http://proxycheck.io/v2/{IP}?vpn=1&asn=1"
+    api_key: "test_key"
+    enabled: true                     # Enable for testing

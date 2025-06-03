@@ -1,0 +1,86 @@
+# Public Community Server Configuration
+# Optimized for large public servers with diverse player base
+# Focus: Balance between security and accessibility
+
+# General Settings
+plugin:
+  enabled: true
+  debug: false
+  update_check: true
+
+# Bot Protection - Relaxed for public access
+bot_protection:
+  enabled: true
+  max_joins_per_ip_per_second: 5      # Higher for public servers
+  max_joins_per_ip_per_10_seconds: 8  # Allow for legitimate shared connections
+  auto_ban_duration: 180              # Shorter bans (3 minutes)
+  
+  suspicious_username_patterns:
+    - "^[a-z]{1,3}[0-9]{3,8}$"           # Basic bot patterns
+    - "^(test|bot|hack|ddos|spam)[0-9]*$" # Common bot names
+    
+  whitelist_usernames:
+    - "AdminUser"
+    - "Moderator"
+
+# VPN Detection - Warning mode for public servers
+vpn_detection:
+  enabled: true
+  api_provider: "ip-api"
+  timeout: 5000
+  action: "warn"    # Warn instead of kick for public servers
+  message: "&eWarning: VPN/Proxy detected. If you experience issues, please contact staff."
+  
+  whitelist_ips:
+    - "127.0.0.1"
+    - "192.168.0.0/16"
+
+# Challenge Mode - Higher threshold for public servers
+challenge_mode:
+  enabled: true
+  trigger_threshold: 20               # Higher threshold for busy servers
+  duration: 600                       # 10 minutes
+  verification_timeout: 120           # 2 minutes for players
+  limbo_world: "verification"
+  
+  welcome_message: |
+    &e&lSERVER PROTECTION ACTIVE
+    &7Due to suspicious activity, please verify yourself:
+    &a/verify {CODE}
+    &7Your verification code: &b{CODE}
+    &7You have 2 minutes to verify.
+    
+  kick_message: "&cVerification timeout. Please rejoin and verify quickly."
+
+# Rate Limiting - Generous for public access
+rate_limiting:
+  enabled: true
+  max_packets_per_second: 150         # Higher for public servers
+  max_connections_per_ip: 8           # Allow shared connections
+  connection_throttle: 500            # Faster reconnections allowed
+
+# Logging
+logging:
+  console: true
+  file: true
+  file_path: "plugins/ShadowDefenderMC/logs/security.log"
+  max_file_size: 20971520             # 20MB for busy servers
+  log_level: "INFO"
+
+# Messages
+messages:
+  prefix: "&8[&6🛡️ HexGuard&8] "
+  bot_kick: "&cConnection blocked: Suspicious activity detected"
+  rate_limit_kick: "&cToo many requests. Please wait a moment."
+  vpn_kick: "&eVPN/Proxy detected. Contact staff if this is incorrect."
+  verification_success: "&a✅ Verification successful! Welcome to the server."
+  verification_failed: "&c❌ Invalid verification code. Try again."
+  challenge_activated: "&e⚠️ Server protection activated due to suspicious activity"
+
+# Advanced Settings - Optimized for public servers
+advanced:
+  use_async_processing: true
+  cache_duration: 600                 # 10 minutes
+  cleanup_interval: 30                # More frequent cleanup
+  max_cached_ips: 20000              # Higher cache for busy servers
+  thread_pool_size: 6                # More threads for busy servers
